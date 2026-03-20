@@ -41,7 +41,7 @@ describe('集成测试', () => {
 
   it('键盘按键触发琴键视觉反馈', () => {
     render(<App />)
-    fireEvent.keyDown(window, { key: 'a' })
+    fireEvent.keyDown(window, { key: 'z' })
     const key = screen.getByTestId('piano-key-C3')
     expect(key).toHaveClass('active')
   })

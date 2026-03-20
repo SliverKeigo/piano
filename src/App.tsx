@@ -68,7 +68,7 @@ function App() {
 
       {/* Footer hint */}
       <p className="mt-8 text-xs text-neutral-300">
-        A-J 低八度 · K-V 高八度
+        Z-M 低八度 · Q-I 高八度
       </p>
     </div>
   )

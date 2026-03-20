@@ -45,7 +45,7 @@ describe('PianoKeyboard', () => {
   it('键盘按键触发对应琴键', () => {
     const onNoteOn = vi.fn()
     render(<PianoKeyboard onNoteOn={onNoteOn} />)
-    fireEvent.keyDown(window, { key: 'a' })
+    fireEvent.keyDown(window, { key: 'z' })
     expect(onNoteOn).toHaveBeenCalledWith('C3')
   })
 
