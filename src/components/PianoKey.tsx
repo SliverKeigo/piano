@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react'
+
 interface PianoKeyProps {
   note: string
   isBlack: boolean
@@ -7,6 +9,7 @@ interface PianoKeyProps {
   keyLabel?: string
   onNoteOn: (note: string) => void
   onNoteOff: (note: string) => void
+  style?: CSSProperties
 }
 
 export function PianoKey({
@@ -18,6 +21,7 @@ export function PianoKey({
   keyLabel,
   onNoteOn,
   onNoteOff,
+  style,
 }: PianoKeyProps) {
   const getClassName = () => {
     const base = isBlack
@@ -42,6 +46,7 @@ export function PianoKey({
     <div
       data-testid={`piano-key-${note}`}
       className={getClassName()}
+      style={style}
       onMouseDown={() => onNoteOn(note)}
       onMouseUp={() => onNoteOff(note)}
       onMouseLeave={() => onNoteOff(note)}
