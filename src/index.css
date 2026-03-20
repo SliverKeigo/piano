@@ -1,1 +1,100 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --font-sans: 'Poppins', system-ui, sans-serif;
+}
+
+/* Piano key 3D effects */
+.piano-key-white {
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f8f8 85%, #e8e8e8 100%);
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 1px solid #d4d4d4;
+  border-top: none;
+  transition: all 0.06s ease-out;
+}
+
+.piano-key-white:active,
+.piano-key-white.active {
+  background: linear-gradient(to bottom, #e8e8e8 0%, #e0e0e0 100%);
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.08),
+    inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transform: translateY(1px);
+}
+
+.piano-key-white.highlighted {
+  background: linear-gradient(to bottom, #c5c5c5 0%, #b0b0b0 100%);
+  box-shadow:
+    0 0 12px rgba(150, 150, 150, 0.4),
+    0 2px 3px rgba(0, 0, 0, 0.1);
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.piano-key-white.error {
+  background: linear-gradient(to bottom, #444 0%, #333 100%);
+  box-shadow: 0 0 8px rgba(50, 50, 50, 0.3);
+}
+
+.piano-key-black {
+  background: linear-gradient(to bottom, #3a3a3a 0%, #1a1a1a 70%, #111111 100%);
+  box-shadow:
+    0 3px 5px rgba(0, 0, 0, 0.4),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(80, 80, 80, 0.4);
+  border: 1px solid #111;
+  border-top: none;
+  transition: all 0.06s ease-out;
+}
+
+.piano-key-black:active,
+.piano-key-black.active {
+  background: linear-gradient(to bottom, #222 0%, #111 100%);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    inset 0 1px 3px rgba(0, 0, 0, 0.4);
+  transform: translateY(1px);
+  height: 7.5rem;
+}
+
+.piano-key-black.highlighted {
+  background: linear-gradient(to bottom, #666 0%, #555 100%);
+  box-shadow: 0 0 12px rgba(150, 150, 150, 0.3);
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+.piano-key-black.error {
+  background: linear-gradient(to bottom, #555 0%, #444 100%);
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .piano-key-white,
+  .piano-key-black {
+    transition: none;
+    animation: none;
+  }
+  .highlighted {
+    animation: none;
+  }
+}
+
+/* Progress bar */
+.progress-track {
+  background: #e5e5e5;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #888 0%, #666 100%);
+  border-radius: 9999px;
+  transition: width 0.15s ease-out;
+}

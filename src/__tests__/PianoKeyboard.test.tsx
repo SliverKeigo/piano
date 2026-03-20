@@ -52,12 +52,12 @@ describe('PianoKeyboard', () => {
   it('activeNotes 高亮对应琴键', () => {
     render(<PianoKeyboard activeNotes={new Set(['C4'])} />)
     const key = screen.getByTestId('piano-key-C4')
-    expect(key.className).toContain('bg-[#E0E0E0]')
+    expect(key).toHaveClass('active')
   })
 
   it('highlightedNote 高亮引导音符', () => {
     render(<PianoKeyboard highlightedNote="D4" />)
     const key = screen.getByTestId('piano-key-D4')
-    expect(key.className).toContain('bg-[#B0B0B0]')
+    expect(key).toHaveClass('highlighted')
   })
 })

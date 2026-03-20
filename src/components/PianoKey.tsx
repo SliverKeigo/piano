@@ -23,36 +23,33 @@ export function PianoKey({
   onNoteOff,
   style,
 }: PianoKeyProps) {
-  const getClassName = () => {
-    const base = isBlack
-      ? 'w-8 h-32 z-10 -mx-4 rounded-b-md border border-gray-600'
-      : 'w-12 h-48 rounded-b-md border border-gray-300'
+  const stateClass = isError
+    ? 'error'
+    : isHighlighted
+      ? 'highlighted'
+      : isActive
+        ? 'active'
+        : ''
 
-    let color: string
-    if (isError) {
-      color = 'bg-[#333333]'
-    } else if (isHighlighted) {
-      color = 'bg-[#B0B0B0] animate-pulse'
-    } else if (isActive) {
-      color = isBlack ? 'bg-[#2A2A2A]' : 'bg-[#E0E0E0]'
-    } else {
-      color = isBlack ? 'bg-[#4A4A4A]' : 'bg-white'
-    }
+  const baseClass = isBlack ? 'piano-key-black' : 'piano-key-white'
 
-    return `${base} ${color} cursor-pointer select-none flex flex-col justify-end items-center pb-2 transition-colors duration-75`
-  }
+  const sizeClass = isBlack
+    ? 'w-[30px] h-32 z-10 rounded-b-lg'
+    : 'w-[52px] h-52 rounded-b-lg'
 
   return (
     <div
       data-testid={`piano-key-${note}`}
-      className={getClassName()}
+      className={`${baseClass} ${stateClass} ${sizeClass} cursor-pointer select-none flex flex-col justify-end items-center pb-2`}
       style={style}
       onMouseDown={() => onNoteOn(note)}
       onMouseUp={() => onNoteOff(note)}
       onMouseLeave={() => onNoteOff(note)}
     >
       {keyLabel && (
-        <span className={`text-xs ${isBlack ? 'text-gray-300' : 'text-[#666666]'}`}>
+        <span className={`text-[10px] font-medium uppercase tracking-wide ${
+          isBlack ? 'text-neutral-400' : 'text-neutral-400'
+        }`}>
           {keyLabel}
         </span>
       )}

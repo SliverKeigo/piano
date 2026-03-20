@@ -43,6 +43,6 @@ describe('集成测试', () => {
     render(<App />)
     fireEvent.keyDown(window, { key: 'a' })
     const key = screen.getByTestId('piano-key-C3')
-    expect(key.className).toContain('bg-[#E0E0E0]')
+    expect(key).toHaveClass('active')
   })
 })

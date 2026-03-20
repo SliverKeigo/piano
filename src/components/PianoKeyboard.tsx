@@ -11,6 +11,9 @@ interface PianoKeyboardProps {
   errorNote?: string | null
 }
 
+const WHITE_KEY_WIDTH = 52
+const BLACK_KEY_WIDTH = 30
+
 export function PianoKeyboard({
   onNoteOn,
   onNoteOff,
@@ -27,19 +30,13 @@ export function PianoKeyboard({
   }, [onNoteOff])
 
   const keyboardActiveNotes = useKeyboard(handleNoteOn, handleNoteOff)
-
   const mergedActiveNotes = new Set([...activeNotes, ...keyboardActiveNotes])
 
-  // Separate white and black keys
   const whiteNotes = ALL_NOTES.filter(note => !isBlackKey(note))
   const blackNotes = ALL_NOTES.filter(note => isBlackKey(note))
 
-  // Build a map from note to its preceding white key index for black key positioning
-  // For each black key, find how many white keys come before it
   const getBlackKeyPosition = (blackNote: string): number => {
-    // Find the index of this black note in ALL_NOTES
     const noteIndex = ALL_NOTES.indexOf(blackNote)
-    // Count white keys before this note
     let whiteCount = 0
     for (let i = 0; i < noteIndex; i++) {
       if (!isBlackKey(ALL_NOTES[i])) {
@@ -49,13 +46,8 @@ export function PianoKeyboard({
     return whiteCount
   }
 
-  // White key width: w-12 = 48px, Black key width: w-8 = 32px
-  // Black key left = whiteKeyIndex * 48 - 32/2 + 48/2 = whiteKeyIndex * 48 + 8
-  // More precisely: positioned so black key center aligns with the gap between two white keys
-  // left = whiteCount * 48 - 16  (center of black key at boundary of previous white key)
-
   return (
-    <div className="relative inline-flex">
+    <div className="relative inline-flex rounded-b-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] bg-gradient-to-b from-neutral-800 to-neutral-900 pt-3 px-1 pb-0">
       {/* White keys */}
       {whiteNotes.map(note => (
         <PianoKey
@@ -71,11 +63,10 @@ export function PianoKeyboard({
         />
       ))}
 
-      {/* Black keys - absolutely positioned */}
+      {/* Black keys */}
       {blackNotes.map(note => {
         const whiteKeyIndex = getBlackKeyPosition(note)
-        // left = whiteKeyIndex * 48px (white key width) - 16px (half of black key width)
-        const leftPx = whiteKeyIndex * 48 - 16
+        const leftPx = whiteKeyIndex * WHITE_KEY_WIDTH - BLACK_KEY_WIDTH / 2 + 4
         return (
           <PianoKey
             key={note}
@@ -87,7 +78,7 @@ export function PianoKeyboard({
             keyLabel={noteToKey(note) ?? undefined}
             onNoteOn={handleNoteOn}
             onNoteOff={handleNoteOff}
-            style={{ position: 'absolute', left: `${leftPx}px`, top: 0 }}
+            style={{ position: 'absolute', left: `${leftPx}px`, top: '12px' }}
           />
         )
       })}

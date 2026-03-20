@@ -31,27 +31,45 @@ function App() {
     : null
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] flex flex-col items-center gap-8 py-12">
-      <h1 className="text-3xl font-light text-[#666666]">Piano Keyboard</h1>
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-neutral-100 flex flex-col items-center px-4 py-12 md:py-16">
+      {/* Header */}
+      <header className="text-center mb-10">
+        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-neutral-800">
+          Piano
+        </h1>
+        <p className="mt-1 text-sm text-neutral-400 font-light">
+          使用键盘或鼠标弹奏 · 输入简谱自动演奏
+        </p>
+      </header>
 
-      <SongInput onLoad={handleLoad} />
+      {/* Controls */}
+      <div className="w-full max-w-2xl space-y-4 mb-10">
+        <SongInput onLoad={handleLoad} />
+        <PlaybackControl
+          state={playback.state}
+          onPlay={playback.play}
+          onPause={playback.pause}
+          onStop={playback.stop}
+          onToggleMode={playback.toggleMode}
+          onSpeedChange={playback.setSpeed}
+        />
+      </div>
 
-      <PlaybackControl
-        state={playback.state}
-        onPlay={playback.play}
-        onPause={playback.pause}
-        onStop={playback.stop}
-        onToggleMode={playback.toggleMode}
-        onSpeedChange={playback.setSpeed}
-      />
+      {/* Piano */}
+      <div className="overflow-x-auto max-w-full pb-4">
+        <PianoKeyboard
+          onNoteOn={handleNoteOn}
+          onNoteOff={noteOff}
+          activeNotes={activeNotes}
+          highlightedNote={highlightedNote}
+          errorNote={errorNote}
+        />
+      </div>
 
-      <PianoKeyboard
-        onNoteOn={handleNoteOn}
-        onNoteOff={noteOff}
-        activeNotes={activeNotes}
-        highlightedNote={highlightedNote}
-        errorNote={errorNote}
-      />
+      {/* Footer hint */}
+      <p className="mt-8 text-xs text-neutral-300">
+        A-J 低八度 · K-V 高八度
+      </p>
     </div>
   )
 }
